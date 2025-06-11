@@ -1,0 +1,28 @@
+{
+  "name": "cryptocurrencies-sim",
+  "version": "1.0.0",
+  "description": "ระบบ API สำหรับแพลตฟอร์มซื้อขายคริปโต รองรับการเทรด, ฝาก-ถอน, จัดการวอลเล็ท และบันทึกธุรกรรม",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slowhandc1ap/Cryptocurrencies-sim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slowhandc1ap/Cryptocurrencies-sim/issues"
+  },
+  "homepage": "https://github.com/slowhandc1ap/Cryptocurrencies-sim#readme",
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
