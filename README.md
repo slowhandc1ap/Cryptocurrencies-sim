@@ -1,5 +1,9 @@
 # 📘 Database Schema: Cryptocurrency Trading System
 
+
+![Untitled (1)](https://github.com/user-attachments/assets/15776005-dd7e-4af6-b18d-de25f19a0a19)
+
+
 ## 📂 รายการตารางทั้งหมด
 
 1. `users`
