@@ -71,3 +71,24 @@ export async function deleteWallet(req, res) {
     }
 }
 
+export async function deleteWalletsByUser(req, res) {
+    try {
+        const { userId } = req.params; 
+
+        if (!userId) {
+            return res.status(400).json({ error: "Missing user_id" });
+        }
+
+        const deletedRows = Wallet.deleteWalletsByUser(Number(userId)); 
+
+        if (deletedRows === 0) {
+            return res.status(404).json({ error: "Wallet not found" });
+        }
+
+        res.status(200).json({ message: `Wallet by User Id : ${userId} deleted successfully` });
+    } catch (err) {
+        console.error("❌ Delete Wallet Error:", err);
+        res.status(500).json({ error: err.message });
+    }
+}
+

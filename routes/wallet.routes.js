@@ -3,7 +3,8 @@ import {
     getAllwallets,
     createWallet,
     getAllwalletByUserId,
-    deleteWallet
+    deleteWallet,
+    deleteWalletsByUser
 } from '../controllers/wallet.controller.js';
 
 const router = express.Router();
@@ -18,6 +19,8 @@ router.get('/:userId',getAllwalletByUserId)
 router.post('/', createWallet);
 
 router.delete('/:walletId', deleteWallet);
+router.delete('/user/:userId', deleteWalletsByUser); // Optional route
+
 
 
 export default router;

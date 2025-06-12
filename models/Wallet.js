@@ -31,11 +31,21 @@ class Wallet {
     }
     static delete(id) {
         if (typeof id !== "number" && typeof id !== "string") {
-            throw new TypeError("user_id must be a number or string");
+            throw new TypeError("wallet ID must be a number or string");
         }
     
         const stmt = db.prepare('DELETE FROM wallets WHERE id = ?');
         const result = stmt.run(id);
+        return result.changes;
+    }
+
+    static deleteWalletsByUser(userId) {
+        if (typeof userId !== "number" && typeof id !== "string") {
+            throw new TypeError("user_id must be a number or string");
+        }
+    
+        const stmt = db.prepare('DELETE FROM wallets WHERE user_id = ?');
+        const result = stmt.run(userId);
         return result.changes;
     }
     
