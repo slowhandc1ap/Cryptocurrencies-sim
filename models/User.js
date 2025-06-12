@@ -30,14 +30,14 @@ class User {
     return row ? new User(row) : null;
   }
 
-  update() {
+  static update() {
     const stmt = db.prepare(`
       UPDATE users SET username = ?, email = ?, password = ?, updated_at = ? WHERE id = ?
     `);
     stmt.run(this.username, this.email, this.password, new Date().toISOString(), this.id);
   }
 
-  delete() {
+  static delete() {
     const stmt = db.prepare('DELETE FROM users WHERE id = ?');
     stmt.run(this.id);
   }
