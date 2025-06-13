@@ -18,8 +18,7 @@
 ## 🧰 Tech Stack
 
 - **Language**: / Node.js 
-- **Database**: Json file for now
-- **Authentication**: JWT / OAuth2 (เลือกตามโปรเจค)
+- **Database**: Sqlite
 - **Architecture**: RESTful API /
 
 
