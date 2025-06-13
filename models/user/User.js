@@ -1,5 +1,5 @@
-import db from '../config/storage.js';
-
+import db from '../../config/storage.js';
+import Wallet from '../wallet/Wallet.js';
 class User {
   constructor({ id, username, email, password, created_at, updated_at }) {
     this.id = id;
@@ -40,8 +40,6 @@ class User {
         reject(error)
       }
     })
-
-
   }
 
   static findById(id) {
@@ -82,19 +80,19 @@ class User {
   }
 
 
-  static delete(user_id) {
-    return new Promise((resolve, reject) => {
-      try {
-        const stmt = db.prepare('DELETE FROM users WHERE id = ?');
-        stmt.run(user_id);
-        resolve()
-      } catch (error) {
-        reject(error)
-      }
-
-    })
-
+  static async delete(user_id) {
+    try {
+      await Wallet.delete(user_id);
+  
+      const stmt = db.prepare('DELETE FROM users WHERE id = ?');
+      const result = stmt.run(user_id);
+  
+      return result.changes; 
+    } catch (error) {
+      throw error; 
+    }
   }
+  
 }
 
 export default User;

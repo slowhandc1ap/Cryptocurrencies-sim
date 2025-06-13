@@ -6,8 +6,8 @@ import {
   deleteUserController,
   updateUserById,
   
-} from '../controllers/user.controller.js';
-import validateRegister from '../middleware/user.middleware.js';
+} from '../../controllers/user/user.controller.js';
+import validateRegister from '../../middleware/user.middleware.js';
 
 const router = express.Router();
 

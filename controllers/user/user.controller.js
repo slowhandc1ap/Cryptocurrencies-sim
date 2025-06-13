@@ -1,5 +1,5 @@
-import User from '../models/User.js';
-import db from '../config/storage.js';
+import User from '../../models/user/User.js';
+import db from '../../config/storage.js';
 
 // GET /users
 export async function getAllUsers(req, res) {

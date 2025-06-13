@@ -32,6 +32,7 @@ db.exec(`
   );
 `);
 // สร้างตาราง currencies
+
 db.exec(`
   CREATE TABLE IF NOT EXISTS currencies (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,6 +40,7 @@ db.exec(`
     name TEXT NOT NULL UNIQUE,
     type TEXT NOT NULL, -- 'crypto' or 'fiat'
     decimals INTEGER NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 `);
@@ -150,6 +152,7 @@ db.exec(`
     FOREIGN KEY (currency_id) REFERENCES currencies(id)
   );
 `);
+
 
 
 export default db;

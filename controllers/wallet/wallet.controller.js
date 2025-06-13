@@ -1,5 +1,5 @@
-import db from "../config/storage.js";
-import Wallet from "../models/Wallet.js"
+import db from "../../config/storage.js";
+import Wallet from "../../models/wallet/Wallet.js"
 
 // ingest All wallet 
 export async function getAllwallets(req, res) {
@@ -37,7 +37,7 @@ export async function createWallet(req, res) {
         const user = userStmt.get(user_id);
 
         if (!user) {
-            return null
+           res.status(404).json({message: "User not found"})
         }
 
 
@@ -60,13 +60,13 @@ export async function deleteWallet(req, res) {
 
         const deletedRows = Wallet.delete(Number(walletId)); 
 
-        if (deletedRows === 0) {
+        if (!deletedRows) {
             return res.status(404).json({ error: "Wallet not found" });
         }
 
         res.status(200).json({ message: `Wallet : ${walletId} deleted successfully` });
     } catch (err) {
-        console.error("❌ Delete Wallet Error:", err);
+        console.error(" Delete Wallet Error:", err);
         res.status(500).json({ error: err.message });
     }
 }

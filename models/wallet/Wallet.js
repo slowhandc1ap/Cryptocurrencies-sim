@@ -1,5 +1,5 @@
-import db from "../config/storage.js";
-
+import db from "../../config/storage.js";
+import WalletBalance from "./WalletBalance.js";
 class Wallet {
     constructor({ id, user_id, create_at, update_at }) {
         this.id = id,
@@ -39,6 +39,8 @@ class Wallet {
     static add(wallet) {
         return new Promise((resolve, reject) => {
             try {
+
+
                 const stmt = db.prepare(
                     'INSERT INTO wallets (user_id, created_at, updated_at) VALUES (?,?,?)'
 
@@ -53,40 +55,23 @@ class Wallet {
     }
 
 
-    static delete(id) {
-        return Promise((resolve, reject) => {
-            try {
-                if (typeof id !== "number" && typeof id !== "string") {
-                    throw new TypeError("wallet ID must be a number or string");
-                }
-
-                const stmt = db.prepare('DELETE FROM wallets WHERE id = ?');
-                const result = stmt.run(id);
-                resolve(result.changes);
-            } catch (error) {
-                reject(error)
-            }
-        })
-
-
+    static async delete(userId) {
+        try {
+            const stmt = db.prepare('SELECT * FROM wallets WHERE user_id = ?');
+            const wallets = stmt.all(userId);
+            
+            for (const wallet of wallets) {
+                await WalletBalance.deleteByWalletId(wallet.id);
+              }
+              
+            const row = db.prepare('DELETE FROM wallets WHERE user_id = ?');
+            return row.run(userId);
+        } catch (error) {
+            throw error;
+        }
     }
+    
 
-    static deleteWalletsByUser(userId) {
-        return new Promise((resolve, reject) => {
-            try {
-                if (typeof userId !== "number" && typeof id !== "string") {
-                    throw new TypeError("user_id must be a number or string");
-                }
-
-                const stmt = db.prepare('DELETE FROM wallets WHERE user_id = ?');
-                const result = stmt.run(userId);
-                resolve(result.changes);
-
-            } catch (error) {
-                reject(error)
-            }
-        })
-    }
 }
 
 

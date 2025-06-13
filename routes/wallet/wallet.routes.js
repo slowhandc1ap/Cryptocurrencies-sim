@@ -5,7 +5,7 @@ import {
     getAllwalletByUserId,
     deleteWallet,
     deleteWalletsByUser
-} from '../controllers/wallet.controller.js';
+} from '../../controllers/wallet/wallet.controller.js';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.get('/', getAllwallets);
 router.get('/:userId',getAllwalletByUserId)
 
 //POST /wallets 
-router.post('/', createWallet);
+router.post('/add', createWallet);
 
 router.delete('/:walletId', deleteWallet);
 
