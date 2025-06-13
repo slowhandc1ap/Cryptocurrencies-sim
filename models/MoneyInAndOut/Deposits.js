@@ -36,11 +36,11 @@ class Deposits {
                 `)
             insertDeposit.run(user_id, currency_id, amount, tx_hash, 'confirmed');
 
-            const updateAmount = await WalletBalance.increaseAmount(wallet_id, currency_id, amount);
+            const updateBalance = await WalletBalance.increaseAmount(wallet_id, currency_id, amount);
                 
             return {
                 depositObj,
-                updateAmount
+                updateBalance
               };
 
         } catch (error) {

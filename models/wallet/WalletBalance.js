@@ -123,6 +123,30 @@ static increaseAmount(wallet_id, currency_id, amountToAdd) {
       }
     });
   }
+
+  static decreaseAmount(wallet_id, currency_id, amountToAdd) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(`
+          UPDATE wallet_balances
+          SET amount = amount - ?, updated_at = ?
+          WHERE wallet_id = ? AND currency_id = ?
+        `);
+        stmt.run(amountToAdd, new Date().toISOString(), wallet_id, currency_id);
+        // ดึงข้อมูลแถวล่าสุดกลับมาอีกครั้งเพื่อใช้ใน response
+        const selectStmt = db.prepare(`
+          SELECT * FROM wallet_balances
+          WHERE wallet_id = ? AND currency_id = ?
+        `);
+        const row = selectStmt.get(wallet_id, currency_id);
+  
+        resolve(row ? new WalletBalance(row) : null);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  
   
 
   static delete(id) {
