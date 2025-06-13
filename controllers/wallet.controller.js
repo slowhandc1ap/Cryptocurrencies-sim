@@ -4,7 +4,7 @@ import Wallet from "../models/Wallet.js"
 // ingest All wallet 
 export async function getAllwallets(req, res) {
     try {
-        const wallets = Wallet.getAll();
+        const wallets = await Wallet.getAll();
         res.json(wallets);
     } catch (err) {
         res.status(500).json({ error: `Failed to fetch Wallets  : ${err}` })
@@ -14,7 +14,7 @@ export async function getAllwallets(req, res) {
 export async function getAllwalletByUserId(req, res) {
     try {
         const { userId } = req.params;
-        const wallet = Wallet.getByUserId(userId);
+        const wallet = await Wallet.getByUserId(userId);
         if (!wallet) {
             return res.status(404).json({ error: "Wallet Not Found " })
         }
@@ -37,14 +37,14 @@ export async function createWallet(req, res) {
         const user = userStmt.get(user_id);
 
         if (!user) {
-            return res.status(404).json({ error: "User not found, can't create wallet." });
+            return null
         }
 
 
-        const newWallet = new Wallet({ user_id });
-        const walletId = Wallet.add(newWallet);
+        const newWallet =  new Wallet({ user_id });
+        const walletId =  await Wallet.add(newWallet);
 
-        res.status(201).json({ message: "Wallet Created", wallet_ID: walletId });
+        res.status(201).json({ message: "Wallet Created", wallet_ID: walletId , UserID: user_id});
     } catch (err) {
         res.status(500).json({ error: `Failed to Creaet Wallet : ${err}` })
     }
@@ -78,8 +78,7 @@ export async function deleteWalletsByUser(req, res) {
         if (!userId) {
             return res.status(400).json({ error: "Missing user_id" });
         }
-
-        const deletedRows = Wallet.deleteWalletsByUser(Number(userId)); 
+        const deletedRows = await Wallet.deleteWalletsByUser(Number(userId)); 
 
         if (deletedRows === 0) {
             return res.status(404).json({ error: "Wallet not found" });
@@ -87,7 +86,7 @@ export async function deleteWalletsByUser(req, res) {
 
         res.status(200).json({ message: `Wallet by User Id : ${userId} deleted successfully` });
     } catch (err) {
-        console.error("❌ Delete Wallet Error:", err);
+        console.error(" Delete Wallet Error:", err);
         res.status(500).json({ error: err.message });
     }
 }

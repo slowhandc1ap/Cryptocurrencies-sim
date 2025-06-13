@@ -11,35 +11,89 @@ class User {
   }
 
   static getAll() {
-    const stmt = db.prepare('SELECT * FROM users');
-    const rows = stmt.all();
-    return rows.map(row => new User(row));
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare('SELECT * FROM users');
+        const rows = stmt.all();
+        resolve(rows.map(row => new User(row)));
+      } catch (error) {
+        reject(error)
+      }
+    })
+
   }
 
   static add(user) {
-    const stmt = db.prepare(`
-      INSERT INTO users (username, email, password, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?)
-    `);
-    stmt.run(user.username, user.email, user.password, user.created_at, user.updated_at);
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(`
+          INSERT INTO users (username, email, password, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?)
+        `);
+
+        const result = stmt.run(user.username, user.email, user.password, user.created_at, user.updated_at);
+        resolve({
+          id: result.lastInsertRowid,
+          ...user
+        });
+      } catch (error) {
+        reject(error)
+      }
+    })
+
+
   }
 
   static findById(id) {
-    const stmt = db.prepare('SELECT * FROM users WHERE id = ?');
-    const row = stmt.get(id);
-    return row ? new User(row) : null;
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare('SELECT * FROM users WHERE id = ?');
+        const row = stmt.get(id);
+        resolve(row ? new User(row) : null);
+      } catch (error) {
+        reject(error)
+      }
+    })
+
   }
 
-  static update() {
-    const stmt = db.prepare(`
-      UPDATE users SET username = ?, email = ?, password = ?, updated_at = ? WHERE id = ?
-    `);
-    stmt.run(this.username, this.email, this.password, new Date().toISOString(), this.id);
+  static update(user) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(`
+          UPDATE users
+          SET username = ?, email = ?, password = ?, updated_at = ?
+          WHERE id = ?
+        `);
+
+        const result = stmt.run(
+          user.username,
+          user.email,
+          user.password,
+          new Date().toISOString(),
+          user.id
+        );
+
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
-  static delete() {
-    const stmt = db.prepare('DELETE FROM users WHERE id = ?');
-    stmt.run(this.id);
+
+  static delete(user_id) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare('DELETE FROM users WHERE id = ?');
+        stmt.run(user_id);
+        resolve()
+      } catch (error) {
+        reject(error)
+      }
+
+    })
+
   }
 }
 

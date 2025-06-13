@@ -19,6 +19,8 @@ router.get('/:userId',getAllwalletByUserId)
 router.post('/', createWallet);
 
 router.delete('/:walletId', deleteWallet);
+
+
 router.delete('/user/:userId', deleteWalletsByUser); // Optional route
 
 
