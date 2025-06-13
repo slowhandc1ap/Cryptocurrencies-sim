@@ -9,11 +9,12 @@ class Deposits {
         this.amount = amount,
         this.tx_hash = tx_hash,
         this.status = status || 'pending', 
-        this.create_at = create_at || new Date().toISOString()
+        this.created_at = create_at || new Date().toISOString()
     }
 
-    static async moneyIn ({user_id, currency_id, amount, tx_hash}) {
+    static async moneyIn (depositObj) {
         try {
+            const { user_id, currency_id, amount, tx_hash } = depositObj;
             // find user wallet
             const wallet = await Wallet.getByUserId(user_id);
             if(!wallet) throw new Error('Wallet not found')
@@ -36,9 +37,11 @@ class Deposits {
             insertDeposit.run(user_id, currency_id, amount, tx_hash, 'confirmed');
 
             const updateAmount = await WalletBalance.increaseAmount(wallet_id, currency_id, amount);
-            console.log(updateAmount)
-            return (updateAmount)
-
+                
+            return {
+                depositObj,
+                updateAmount
+              };
 
         } catch (error) {
             throw new Error(`Deposit Filed : ${error.message}`)
