@@ -2,10 +2,10 @@ import db from "../../config/storage.js";
 import Wallet from "../wallet/Wallet.js";
 import WalletBalance from "../wallet/WalletBalance.js";
 class Deposits {
-    constructor({id,user_id,currency_id,amount,tx_hash,status,create_at}){
+    constructor({id,user_id,amount,tx_hash,status,create_at}){
         this.id = id,
         this.user_id = user_id,
-        this.currency_id = currency_id,
+        this.currency_id =  2,
         this.amount = amount,
         this.tx_hash = tx_hash,
         this.status = status || 'pending', 

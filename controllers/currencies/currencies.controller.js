@@ -46,7 +46,7 @@ export async function updateCurencies(req,res) {
             ...currencies
         }
         const result = await Currencies.update(updateCurencies)
-        console.log(result)
+ 
         if (!result) {
             return (res.status(404).json({message : 'Cannot find currencies'}))
         }

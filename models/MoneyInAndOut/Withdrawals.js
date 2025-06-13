@@ -21,7 +21,7 @@ class Withdrawals {
         const wallet_id = wallet.id;
 
         const checkBalance = await WalletBalance.getByWalletAndCurrency(wallet_id, currency_id)
-        console.log(checkBalance)
+   
 
         if(!checkBalance){
             throw new Error('Wallet Balance not found')

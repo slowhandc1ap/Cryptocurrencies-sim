@@ -2,7 +2,7 @@ import Deposits from "../../../models/MoneyInAndOut/Deposits.js";
 
 export async function depositsController(req,res) {
     try {
-      const depositObj = new Deposits(req.body); // map เข้า constructor
+      const depositObj = new Deposits(req.body);
       const result = await Deposits.moneyIn(depositObj); // ส่ง object เข้า method
       res.status(200).json({
         message: "Deposit successful and amount updated",

@@ -1,7 +1,7 @@
 import WalletBalance from "../../models/wallet/WalletBalance.js"
 
 export async function getAllWalletBalanceController(req,res) {
-    console.log('getAll')
+
     try {
         const walletBalances = await WalletBalance.getAll();
         res.status(200).json(walletBalances)

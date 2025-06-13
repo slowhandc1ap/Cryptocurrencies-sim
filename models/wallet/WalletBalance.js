@@ -51,7 +51,7 @@ class WalletBalance {
           WHERE wallet_id = ? AND currency_id = ?
         `);
         const row = stmt.get(wallet_id, currency_id);
-        resolve(row ? new WalletBalance(row) : null);
+        resolve(row ? new WalletBalance(row) : null)
       } catch (error) {
         reject(error);
       }
