@@ -6,6 +6,8 @@ import walletBalanceRoutes from './routes/wallet/wallteBalance.routes.js'
 import depositsRoutes from './routes/moneyInAndOut/deposits.routes.js'
 import withdrawalsRoutes from './routes/moneyInAndOut/withdrawals.routes.js'
 import transferCryptoRoutes from './routes/transferCrypto/transfer.routes.js'
+import transactionRoutes from './routes/transaction/transaction.routes.js'
+import tradeOrderRoutes from './routes/trade/tradeOrder.routes.js'
 const app = express();
 const PORT = 3000;
 
@@ -18,6 +20,8 @@ app.use('/walletBalance', walletBalanceRoutes)
 app.use('/deposits', depositsRoutes)
 app.use('/withdrawals', withdrawalsRoutes)
 app.use('/transfer',transferCryptoRoutes)
+app.use('/transaction',transactionRoutes)
+app.use('/tradeorders',tradeOrderRoutes)
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

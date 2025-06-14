@@ -146,6 +146,39 @@ static increaseAmount(wallet_id, currency_id, amountToAdd) {
       }
     });
   }
+
+  static lockAmount(wallet_id, currency_id, amountToLock) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(`
+          UPDATE wallet_balances
+          SET amount = amount - ?, locked_amount = locked_amount + ?, updated_at = ?
+          WHERE wallet_id = ? AND currency_id = ?
+        `);
+        stmt.run(amountToLock, amountToLock, new Date().toISOString(), wallet_id, currency_id);
+        resolve(true);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+  
+  static unlockAmount(wallet_id, currency_id, amountToUnlock) {
+    return new Promise((resolve, reject) => {
+      try {
+        const stmt = db.prepare(`
+          UPDATE wallet_balances
+          SET amount = amount + ?, locked_amount = locked_amount - ?, updated_at = ?
+          WHERE wallet_id = ? AND currency_id = ?
+        `);
+        stmt.run(amountToUnlock, amountToUnlock, new Date().toISOString(), wallet_id, currency_id);
+        resolve(true);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+  
   
   
 

@@ -32,10 +32,12 @@ class Withdrawals {
                 
                 VALUES (?,?,?,?,?,?)
             `)
-        insertWithdraw.run(user_id,currency_id,target_address,amount,fee,'confirmed')
-
+        const result = insertWithdraw.run(user_id,currency_id,target_address,amount,fee,'confirmed')
+        
+        const row = result.lastInsertRowid
+        const withDrawRow = db.prepare(`SELECT * FROM deposits WHERE id = ?`).get(row);
         const updateBalance = await WalletBalance.decreaseAmount(wallet_id,currency_id,amount)
-        return({withDrawObj , updateBalance})
+        return({withDrawRow , updateBalance})
         
     }
 }
