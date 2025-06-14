@@ -15,7 +15,7 @@ router.get('/', getAllUsers);
 // Route POST /users เพิ่ม user (ตรวจสอบข้อมูลก่อน)
 router.post('/', validateRegister, addUserController);
 // update User
-router.put('/update/:user_id', updateUserById)
+router.put('/:user_id', updateUserById)
 router.get('/:user_id', getUserByIdController);
 router.delete('/:user_id', deleteUserController);
 
